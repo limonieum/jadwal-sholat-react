@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+
+:root {
+  --primary: #0f172a;
+  --secondary: #1e293b;
+  --accent: #d4af37; /* Elegant Gold */
+  --accent-light: #f3e5ab;
+  --text-light: #ffffff;
+  --text-dark: #cbd5e1;
+  --glass-bg: rgba(20, 25, 40, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-glow: rgba(212, 175, 55, 0.3);
+  --shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.5);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  background-image: url('/backgorund.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-color: #0f172a;
+  color: var(--text-light);
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.5);
+  /* Overlay gelap agar teks tetap terbaca */
+  z-index: -1;
+}
+
+#root {
+  width: 100%;
+}

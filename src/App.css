@@ -1,0 +1,464 @@
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Elegant ambient glow behind everything */
+.app-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  height: 80vh;
+  background: radial-gradient(circle, var(--glass-glow) 0%, transparent 60%);
+  z-index: 1;
+  pointer-events: none;
+  animation: pulseAmbient 8s infinite alternate ease-in-out;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  position: absolute;
+  top: 2rem;
+  left: 0;
+  padding: 0 4rem;
+  z-index: 10;
+}
+
+.location-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: fadeInDown 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.location-info h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 1px;
+  color: var(--accent);
+  text-shadow: 0 4px 12px rgba(0,0,0,0.8);
+}
+
+.location-info p {
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+}
+
+.weather-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.1rem;
+  font-weight: 300;
+  background: var(--glass-bg);
+  padding: 0.6rem 1.5rem;
+  border-radius: 30px;
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow);
+  color: #fff;
+}
+
+.date-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.audio-toggle {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.audio-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.audio-toggle.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
+  background: rgba(212, 175, 55, 0.05);
+}
+
+.date-info {
+  text-align: right;
+  background: var(--glass-bg);
+  padding: 1.5rem 2.5rem;
+  border-radius: 24px;
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow);
+  animation: fadeInDown 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.date-info .gregorian {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+.date-info .hijri {
+  color: var(--accent);
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+  z-index: 10;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: fadeIn 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.title {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
+}
+
+.subtitle {
+  color: var(--accent-light);
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+
+.countdown-container {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  animation: fadeIn 1.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.countdown-text {
+  font-size: 1.2rem;
+  color: var(--accent-light);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.countdown-timer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.countdown-box {
+  background: rgba(20, 25, 40, 0.6);
+  border: 1px solid var(--accent);
+  border-radius: 16px;
+  padding: 0.8rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 90px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 0 15px rgba(212, 175, 55, 0.1);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+.countdown-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.7rem;
+  color: var(--accent);
+  letter-spacing: 2px;
+  margin-top: 0.2rem;
+  font-weight: 600;
+}
+
+.countdown-separator {
+  color: var(--accent);
+  font-size: 2rem;
+  font-weight: 700;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+
+.times-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 1300px;
+  flex-wrap: nowrap;
+  animation: fadeInUp 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.time-card {
+  flex: 1;
+  background: rgba(15, 23, 42, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  padding: 2.5rem 1rem;
+  text-align: center;
+  backdrop-filter: blur(35px);
+  -webkit-backdrop-filter: blur(35px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  min-width: 140px;
+  z-index: 1;
+}
+
+.time-card-content {
+  position: relative;
+  z-index: 2;
+}
+
+.time-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+  z-index: 10;
+}
+
+/* Highlight the next prayer - Minimalist */
+.time-card.next-prayer {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+  transform: translateY(-5px);
+  z-index: 5;
+}
+
+.time-card.next-prayer::after {
+  content: 'SELANJUTNYA';
+  position: absolute;
+  top: 1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 5px;
+  color: var(--accent);
+  z-index: 3;
+}
+
+.prayer-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+}
+
+.time-card.next-prayer .prayer-name {
+  color: var(--accent);
+  margin-top: 1.2rem;
+}
+
+.prayer-time {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.2rem;
+  font-weight: 400;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.time-card.next-prayer .prayer-time {
+  color: var(--accent);
+  font-size: 3.2rem;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 2rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  color: var(--accent);
+  animation: pulse 1.5s infinite;
+}
+
+.error {
+  text-align: center;
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 2rem;
+  border-radius: 20px;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  backdrop-filter: blur(12px);
+  margin: 2rem auto;
+  max-width: 600px;
+  font-size: 1.2rem;
+}
+
+/* Particle Effects */
+.particles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0; 
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  bottom: -20px;
+  background: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent), 0 0 20px rgba(255, 255, 255, 0.8);
+  animation: floatUp linear infinite;
+  opacity: 0;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.5);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+    transform: translateY(-20vh) translateX(10px) scale(1);
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-110vh) translateX(-20px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+@keyframes pulseAmbient {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+}
+
+@media (max-width: 1200px) {
+  .times-row {
+    flex-wrap: wrap;
+  }
+  .time-card {
+    min-width: 30%;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 1rem 0;
+  }
+  
+  .location-wrapper, .date-info {
+    text-align: center;
+    align-items: center;
+  }
+  
+  .title {
+    font-size: 3.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .time-card {
+    min-width: 45%;
+    padding: 2rem 1rem;
+  }
+
+  .prayer-time {
+    font-size: 2.5rem;
+  }
+}

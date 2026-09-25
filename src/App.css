@@ -433,32 +433,122 @@
 }
 
 @media (max-width: 768px) {
+  .app-container {
+    padding: 1rem;
+    justify-content: flex-start;
+  }
+
   .top-bar {
+    position: relative;
+    top: 0;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
-    padding: 2rem 1rem 0;
+    gap: 1rem;
+    padding: 0;
+    margin-bottom: 1.5rem;
   }
   
-  .location-wrapper, .date-info {
-    text-align: center;
+  .location-wrapper {
     align-items: center;
+    gap: 0.5rem;
+  }
+
+  .location-info h2 {
+    font-size: 2rem;
+  }
+
+  .location-info p {
+    font-size: 0.8rem;
+  }
+
+  .date-wrapper {
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .date-info {
+    text-align: center;
+    padding: 0.8rem 1.5rem;
+  }
+
+  .date-info .gregorian {
+    font-size: 1.2rem;
+  }
+
+  .date-info .hijri {
+    font-size: 0.9rem;
+  }
+
+  .main-content {
+    margin-top: 0;
+    justify-content: flex-start;
+    padding-bottom: 1rem;
+  }
+
+  .header {
+    margin-bottom: 1rem;
   }
   
   .title {
-    font-size: 3.5rem;
+    font-size: 2.2rem;
+    margin-bottom: 0.2rem;
   }
 
   .subtitle {
-    font-size: 1.1rem;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+  }
+  
+  .countdown-container {
+    margin-top: 1rem;
+    transform: scale(0.85);
+  }
+
+  .times-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    width: 100%;
   }
   
   .time-card {
-    min-width: 45%;
-    padding: 2rem 1rem;
+    min-width: 0;
+    padding: 1rem 0.2rem;
+    border-radius: 16px;
+  }
+
+  .prayer-name {
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
   }
 
   .prayer-time {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
+  }
+
+  .time-card.next-prayer .prayer-time {
+    font-size: 1.6rem;
+  }
+
+  .time-card.next-prayer::after {
+    font-size: 0.5rem;
+    top: 0.3rem;
+    letter-spacing: 2px;
+  }
+}
+
+@media (max-width: 400px) {
+  .times-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .countdown-container {
+    transform: scale(0.75);
+    margin-top: 0.5rem;
   }
 }

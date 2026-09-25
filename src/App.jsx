@@ -43,6 +43,16 @@ function App() {
   // Audio state & ref
   const [isAudioEnabled, setIsAudioEnabled] = useState(false);
   const audioRef = useRef(null);
+
+  // Dynamic Theme State
+  const getThemeClass = () => {
+    const hour = new Date().getHours();
+    if (hour >= 4 && hour < 10) return 'theme-morning'; // Pagi
+    if (hour >= 10 && hour < 15) return 'theme-day'; // Siang
+    if (hour >= 15 && hour < 18) return 'theme-afternoon'; // Sore/Senja
+    return 'theme-night'; // Malam
+  };
+  const [theme, setTheme] = useState(getThemeClass());
   
   // Default to Jakarta
   const city = "Jakarta";
@@ -145,6 +155,8 @@ function App() {
       if (data && data.timings) {
         calculateCountdown(data.timings);
       }
+      // Cek update tema tiap detik
+      setTheme(getThemeClass());
     }, 1000);
 
     return () => clearInterval(interval);
@@ -164,7 +176,7 @@ function App() {
     }
   }, [countdown, isAudioEnabled]);
 
-  if (loading) {
+  if (loading && !data) {
     return (
       <div className="app-container">
         <div className="loading">Memuat Data...</div>
@@ -172,7 +184,7 @@ function App() {
     );
   }
 
-  if (error) {
+  if (error && !data) {
     return (
       <div className="app-container">
         <div className="error">{error}</div>
@@ -205,11 +217,11 @@ function App() {
   }
 
   return (
-    <div className="app-container">
+    <div className={`app-container ${theme}`}>
       <Particles />
 
       {/* Audio element for Adzan */}
-      <audio ref={audioRef} src="/adzan.mp3" preload="auto" />
+      <audio ref={audioRef} src="https://server8.mp3quran.net/adhan/Al-aqsa.mp3" preload="auto" />
 
       {/* Top Bar */}
       <div className="top-bar">
@@ -228,13 +240,15 @@ function App() {
         </div>
         
         <div className="date-wrapper">
-          <button 
-            className={`audio-toggle ${isAudioEnabled ? 'active' : ''}`}
-            onClick={() => setIsAudioEnabled(!isAudioEnabled)}
-            title="Aktifkan/Nonaktifkan Adzan Otomatis"
-          >
-            {isAudioEnabled ? '🔊 Adzan Aktif' : '🔇 Adzan Nonaktif'}
-          </button>
+          <div className="controls-row">
+            <button 
+              className={`control-btn ${isAudioEnabled ? 'active' : ''}`}
+              onClick={() => setIsAudioEnabled(!isAudioEnabled)}
+              title="Aktifkan/Nonaktifkan Adzan Otomatis"
+            >
+              {isAudioEnabled ? '🔊 Adzan' : '🔇 Adzan'}
+            </button>
+          </div>
           
           <div className="date-info">
             <div className="gregorian">{dateInfo.readable}</div>
@@ -289,5 +303,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

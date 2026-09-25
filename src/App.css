@@ -6,6 +6,21 @@
   padding: 2rem;
   position: relative;
   overflow: hidden;
+  transition: background 2s ease;
+}
+
+/* Dynamic Themes */
+.theme-morning {
+  background: linear-gradient(180deg, rgba(255, 160, 60, 0.2) 0%, rgba(15, 23, 42, 0.9) 100%);
+}
+.theme-day {
+  background: linear-gradient(180deg, rgba(80, 180, 255, 0.15) 0%, rgba(15, 23, 42, 0.9) 100%);
+}
+.theme-afternoon {
+  background: linear-gradient(180deg, rgba(255, 90, 30, 0.15) 0%, rgba(15, 23, 42, 0.9) 100%);
+}
+.theme-night {
+  background: linear-gradient(180deg, rgba(20, 20, 40, 0.3) 0%, rgba(10, 15, 25, 0.95) 100%);
 }
 
 /* Elegant ambient glow behind everything */
@@ -83,7 +98,13 @@
   gap: 1rem;
 }
 
-.audio-toggle {
+.controls-row {
+  display: flex;
+  gap: 0.8rem;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.control-btn {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: rgba(255, 255, 255, 0.7);
@@ -92,22 +113,21 @@
   cursor: pointer;
   font-family: 'Outfit', sans-serif;
   font-size: 0.8rem;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  animation: fadeInDown 0.8s ease-out;
 }
 
-.audio-toggle:hover {
+.control-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
 }
 
-.audio-toggle.active {
+.control-btn.active {
   border-color: var(--accent);
   color: var(--accent);
   box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
@@ -239,7 +259,6 @@
   50% { opacity: 0; }
   100% { opacity: 1; }
 }
-
 
 .times-row {
   display: flex;

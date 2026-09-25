@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
@@ -40,10 +40,6 @@ function App() {
   const [nextPrayerId, setNextPrayerId] = useState(null);
   const [countdown, setCountdown] = useState(null);
   
-  // Audio state & ref
-  const [isAudioEnabled, setIsAudioEnabled] = useState(false);
-  const audioRef = useRef(null);
-
   // Dynamic Theme State
   const getThemeClass = () => {
     const hour = new Date().getHours();
@@ -147,6 +143,8 @@ function App() {
     fetchData();
   }, [city, country]);
 
+  const [currentTime, setCurrentTime] = useState(new Date());
+  
   useEffect(() => {
     if (data && data.timings) {
       calculateCountdown(data.timings);
@@ -155,26 +153,12 @@ function App() {
       if (data && data.timings) {
         calculateCountdown(data.timings);
       }
-      // Cek update tema tiap detik
       setTheme(getThemeClass());
+      setCurrentTime(new Date());
     }, 1000);
 
     return () => clearInterval(interval);
   }, [data]);
-
-  // Audio trigger when countdown hits exactly 00:00:00
-  useEffect(() => {
-    if (
-      countdown && 
-      countdown.hours === '00' && 
-      countdown.minutes === '00' && 
-      countdown.seconds === '00'
-    ) {
-      if (isAudioEnabled && audioRef.current) {
-        audioRef.current.play().catch(err => console.log("Audio failed to play:", err));
-      }
-    }
-  }, [countdown, isAudioEnabled]);
 
   if (loading && !data) {
     return (
@@ -216,12 +200,15 @@ function App() {
     };
   }
 
+  const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+  const dayName = days[currentTime.getDay()];
+  const currentH = currentTime.getHours().toString().padStart(2, '0');
+  const currentM = currentTime.getMinutes().toString().padStart(2, '0');
+  const currentS = currentTime.getSeconds().toString().padStart(2, '0');
+
   return (
     <div className={`app-container ${theme}`}>
       <Particles />
-
-      {/* Audio element for Adzan */}
-      <audio ref={audioRef} src="https://server8.mp3quran.net/adhan/Al-aqsa.mp3" preload="auto" />
 
       {/* Top Bar */}
       <div className="top-bar">
@@ -240,18 +227,13 @@ function App() {
         </div>
         
         <div className="date-wrapper">
-          <div className="controls-row">
-            <button 
-              className={`control-btn ${isAudioEnabled ? 'active' : ''}`}
-              onClick={() => setIsAudioEnabled(!isAudioEnabled)}
-              title="Aktifkan/Nonaktifkan Adzan Otomatis"
-            >
-              {isAudioEnabled ? '🔊 Adzan' : '🔇 Adzan'}
-            </button>
-          </div>
-          
           <div className="date-info">
-            <div className="gregorian">{dateInfo.readable}</div>
+            <div className="clock-wrapper">
+              <div className="live-clock">
+                {currentH}<span className="clock-separator">:</span>{currentM}<span className="clock-separator">:</span>{currentS}
+              </div>
+            </div>
+            <div className="gregorian">{dayName}, {dateInfo.readable}</div>
             <div className="hijri">{dateInfo.hijri.day} {dateInfo.hijri.month.en} {dateInfo.hijri.year} H</div>
           </div>
         </div>
@@ -303,4 +285,5 @@ function App() {
     </div>
   );
 }
+
 export default App;
